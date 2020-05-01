@@ -1,20 +1,23 @@
-console.log("*** baby server reporting for duty ***");
+console.log("*** server reporting for duty ***");
 
 //______________________________________________________ Server Setup
 const express = require("express");
-const bParser = require("body-parser");
+const bodyParser = require("body-parser");
 
 //_________________________________________________ Instanced Modules
 const app = express();
+const routes = require("./routes");
 
-//___________________________________________________ Config Variabls
-
+//__________________________________________________ Config Variables
 const PORT = process.env.PORT || 4000;
 
-app.use("/", (req, res) => {
-  res.send("hello world");
-});
+//________________________________________________________ Middleware
+app.use(bodyParser.json());
 
+//________________________________________________________HTML Routes
+app.use("/", routes.views);
+
+//______________________________________________________ Start Server
 app.listen(PORT, () => {
   console.log(`***listening at port ${PORT}***`);
 });
