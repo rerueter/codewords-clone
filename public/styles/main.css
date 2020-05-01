@@ -1,3 +1,10 @@
+:root {
+  --dk: #27323a;
+  --ldk: #435055;
+  --lldk: #29a19c;
+  --lt: #a3f7bf;
+}
+
 * {
   padding: 0;
   margin: 0;
@@ -5,6 +12,54 @@
 }
 body {
   font-family: "Courier New", Courier, monospace;
-  background-color: slateblue;
-  color: white;
+  background-color: var(--lldk);
+  color: var(--lt);
+}
+
+header {
+  background-color: var(--dk);
+  text-align: center;
+  margin: 20px auto;
+  padding: 10px 0px;
+}
+header h1 {
+  font-size: 50px;
+}
+footer {
+  background-color: var(--dk);
+  display: flex;
+  justify-content: space-evenly;
+  margin: 20px auto;
+  padding: 10px 0px;
+}
+footer a {
+  color: var(--lt);
+  text-decoration: none;
+}
+.card {
+  height: 100px;
+  width: 200px;
+  margin: 10px;
+  border: 2px solid var(--dk);
+  border-radius: 5px;
+  color: var(--dk);
+  font-size: 25px;
+  background-color: var(--lt);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.selected {
+  background-color: red;
+}
+
+#gameboard {
+  max-width: 900px;
+  margin: 0 auto;
+  border-radius: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  background-color: var(--ldk);
 }
