@@ -50,8 +50,18 @@ footer a {
   justify-content: center;
 }
 
-.selected {
+.selected.gameOver {
+  background-color: var(--dk);
+  color: var(--lt);
+}
+.selected.A {
   background-color: red;
+}
+.selected.B {
+  background-color: blue;
+}
+.selected.Neutral {
+  background-color: grey;
 }
 
 #gameboard {

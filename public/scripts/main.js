@@ -30,25 +30,57 @@ const words = [
   "complicated",
 ];
 
-const populate = (input) => {
+const deckBuild = (input) => {
+  let count = 0;
   for (let i = 0; i < input.length; i++) {
-    const card = document.createElement("div");
-    card.classList.add("card");
-    card.innerHTML = `<h4 id='${input[i]}'>${input[i]}</h4>`;
-    gameBoard.appendChild(card);
+    const card = {};
+    if (count === 0) {
+      card.team = "gameOver";
+    } else if (count > 0 && count < 8) {
+      card.team = "A";
+    } else if (count >= 8 && count < 14) {
+      card.team = "B";
+    } else card.team = "Neutral";
+    card.word = input[i];
+    card.number = i + 1;
+    count++;
     state.cards.push(card);
+    console.log(card);
   }
-  console.log(state.cards);
 };
 
-populate(words);
+const shuffler = () => {
+  const tempCards = [];
+  const cards = state.cards;
+  for (let i = 0; i < cards.length; i++) {
+    const removed = cards[Math.random(cards.length)];
+  }
+};
+
+const populater = () => {
+  for (let i = 0; i < state.cards.length; i++) {
+    const { team, word } = state.cards[i];
+    const div = document.createElement("div");
+    div.classList.add("card", `${team}`);
+    div.innerHTML = `<h3>${word}</h3>`;
+    gameBoard.appendChild(div);
+  }
+};
 
 const revealer = (event) => {
   console.log(event.target);
-  if (event.target.classList.contains("card")) {
+  if (
+    event.target.classList.contains("card") &&
+    !event.target.classList.contains("selected")
+  ) {
     event.target.classList.toggle("selected");
   }
 };
 // state.cards[0].classList.toggle("selected");
 
 gameBoard.addEventListener("click", revealer);
+
+//__________________________________________________Invoked Functions
+deckBuild(words);
+populater();
+// console.log(state.cards);
