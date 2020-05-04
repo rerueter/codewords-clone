@@ -14,7 +14,7 @@ router.get("/", async (req, res) => {
     res.status(200).json(resObject);
   } catch (err) {
     console.log(err);
-    return res.status(400).json({ msg: "something went wrong", err });
+    return res.status(400).json({ msg: "game index failure", err: err });
   }
 });
 
@@ -29,7 +29,7 @@ router.get("/:id", async (req, res) => {
     };
     res.status(200).json(responseObject);
   } catch (err) {
-    return res.status(400).json({ msg: "something went wrong", err });
+    return res.status(400).json({ msg: "something went wrong", err: err });
   }
 });
 
@@ -44,7 +44,7 @@ router.post("/", (req, res) => {
     };
     res.status(200).json(responseObject);
   } catch (err) {
-    return res.status(400).json({ msg: "something went wrong", err });
+    return res.status(400).json({ msg: "something went wrong", err: err });
   }
 });
 
@@ -65,8 +65,9 @@ router.put("/:id", async (req, res) => {
     res.status(200).json(resObject);
   } catch (err) {
     console.log(err);
-    return res.status(500).json({ msg: "update failure", err });
+    return res.status(500).json({ msg: "update failure", err: err });
   }
 });
 
+//____________________________________________________________ Export
 module.exports = router;
