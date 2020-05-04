@@ -50,22 +50,6 @@ const deckBuilder = (input) => {
   console.log(state.cards);
 };
 
-// this isn't overwriting its input as intended and I'm not sure why.
-
-const shufflerTemp = (input) => {
-  const shuffled = [];
-  let inputa = input;
-  while (inputa.length > 0) {
-    let i = Math.floor(Math.random() * inputa.length, 1);
-    shuffled.push(inputa[i]);
-    inputa.splice(i, 1);
-  }
-
-  inputa = shuffled;
-  input = inputa;
-  console.log(input);
-};
-
 const shuffler = (input) => {
   const shuffled = [];
 
@@ -100,21 +84,30 @@ const wiper = () => {
     gameBoard.removeChild(gameBoard.lastChild);
   }
 };
+const hardWiper = () => {
+  wiper();
+  state.cards = [];
+};
 
 const handleSelect = (event) => {
-  console.log(event.target);
+  // console.log(event.target);
   if (
     event.target.classList.contains("card") &&
     !event.target.classList.contains("selected")
   ) {
     event.target.classList.add("selected");
     state.cards[event.target.dataset.number].selected = true;
-    console.log(state.cards[event.target.dataset.number]);
+    // console.log(state.cards[event.target.dataset.number]);
   }
 };
 // state.cards[0].classList.toggle("selected");
 
 gameBoard.addEventListener("click", handleSelect);
+
+//____________________________________________________ Test Utilities
+document.getElementById("new").addEventListener("click", hardWiper);
+document.getElementById("clear").addEventListener("click", wiper);
+document.getElementById("populate").addEventListener("click", populater);
 
 //__________________________________________________Invoked Functions
 shuffler(words);
