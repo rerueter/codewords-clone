@@ -51,19 +51,24 @@ const deckBuilder = (input) => {
 };
 
 // this isn't overwriting its input as intended and I'm not sure why.
-// const shuffler = (input) => {
-//   const shuffled = [];
-//   while (input.length > 0) {
-//     let i = Math.floor(Math.random() * input.length, 1);
-//     shuffled.push(input[i]);
-//     input.splice(i, 1);
-//   }
-//   input = shuffled;
-//   console.log(input);
-// };
+
+const shufflerTemp = (input) => {
+  const shuffled = [];
+  let inputa = input;
+  while (inputa.length > 0) {
+    let i = Math.floor(Math.random() * inputa.length, 1);
+    shuffled.push(inputa[i]);
+    inputa.splice(i, 1);
+  }
+
+  inputa = shuffled;
+  input = inputa;
+  console.log(input);
+};
 
 const shuffler = (input) => {
   const shuffled = [];
+
   while (input.length > 0) {
     let i = Math.floor(Math.random() * input.length, 1);
     shuffled.push(input[i]);
@@ -81,7 +86,11 @@ const populater = () => {
     const { team, word } = state.cards[i];
     const div = document.createElement("div");
     div.classList.add("card", `${team}`);
+    if (state.cards[i].selected === true) {
+      div.classList.add("selected");
+    }
     div.innerHTML = `<h3>${word}</h3>`;
+    div.dataset.number = `${i}`;
     gameBoard.appendChild(div);
   }
 };
@@ -92,18 +101,20 @@ const wiper = () => {
   }
 };
 
-const revealer = (event) => {
+const handleSelect = (event) => {
   console.log(event.target);
   if (
     event.target.classList.contains("card") &&
     !event.target.classList.contains("selected")
   ) {
-    event.target.classList.toggle("selected");
+    event.target.classList.add("selected");
+    state.cards[event.target.dataset.number].selected = true;
+    console.log(state.cards[event.target.dataset.number]);
   }
 };
 // state.cards[0].classList.toggle("selected");
 
-gameBoard.addEventListener("click", revealer);
+gameBoard.addEventListener("click", handleSelect);
 
 //__________________________________________________Invoked Functions
 shuffler(words);

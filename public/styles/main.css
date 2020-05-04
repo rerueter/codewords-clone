@@ -40,8 +40,9 @@ footer a {
   height: 100px;
   width: 200px;
   margin: 10px;
-  border: 2px solid var(--dk);
-  border-radius: 5px;
+  /* border: 5px solid var(--dk); */
+  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.5);
+  border-radius: 1px;
   color: var(--dk);
   font-size: 25px;
   background-color: var(--lt);
