@@ -11,23 +11,30 @@ const gameBoard = document.getElementById("gameboard");
 
 let words = [];
 
+// dummy lexicon collection ids
+// 5eb0c5b52a8e2446037ee7dc - initial
+// 5eb1d64d4575ba5e6bcd4034 - nature
+
 const getWords = async () => {
-  const lexicon = await fetch("/api/v1/lexicon/5eb0c5b52a8e2446037ee7dc", {
+  let lexicon = await fetch("/api/v1/lexicon/5eb1d64d4575ba5e6bcd4034", {
     method: "GET",
   })
     .then((words) => words.json())
     .then((wordsObj) => {
       return wordsObj.data;
     });
-  console.log(lexicon);
-  words = shuffler(lexicon);
-  console.log(words);
+  deckBuilder(shuffler(lexicon));
+  state.cards = shuffler(state.cards);
+  populate();
 };
 
 const deckBuilder = (input) => {
   let count = 0;
   for (let i = 0; i < input.length; i++) {
     const card = {};
+    if (count === 20) {
+      return;
+    }
     if (count === 0) {
       card.team = "gameOver";
     } else if (count > 0 && count < 8) {
@@ -58,7 +65,7 @@ const shuffler = (input) => {
   return shuffled;
 };
 
-const populater = () => {
+const populate = () => {
   wiper();
   for (let i = 0; i < state.cards.length; i++) {
     const { team, word } = state.cards[i];
@@ -73,14 +80,14 @@ const populater = () => {
   }
 };
 
-const wiper = () => {
+const wiper = (bool) => {
   while (gameBoard.firstChild) {
     gameBoard.removeChild(gameBoard.lastChild);
   }
-};
-const hardWiper = () => {
-  wiper();
-  state.cards = [];
+  if (bool) {
+    state.cards = [];
+  }
+  console.log(state.cards);
 };
 
 const handleSelect = (event) => {
@@ -104,9 +111,9 @@ async function initializer() {
 gameBoard.addEventListener("click", handleSelect);
 
 //____________________________________________________ Test Utilities
-document.getElementById("new").addEventListener("click", hardWiper);
-document.getElementById("clear").addEventListener("click", wiper);
-document.getElementById("populate").addEventListener("click", populater);
+document.getElementById("new").addEventListener("click", getWords);
+document.getElementById("clear").addEventListener("click", wiper());
+document.getElementById("populate").addEventListener("click", populate);
 
 //__________________________________________________Invoked Functions
 getWords();
