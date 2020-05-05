@@ -84,9 +84,6 @@ const wiper = (bool) => {
   while (gameBoard.firstChild) {
     gameBoard.removeChild(gameBoard.lastChild);
   }
-  if (bool) {
-    state.cards = [];
-  }
   console.log(state.cards);
 };
 
@@ -102,18 +99,20 @@ const handleSelect = (event) => {
   }
 };
 
-async function initializer() {
-  let temp = await apiTester();
-  console.log(temp);
-}
+const reveal = () => {
+  const cards = document.querySelectorAll("h3");
+  console.log(cards);
+  cards.forEach((card) => card.classList.toggle("spymaster"));
+};
 
 //___________________________________________________ Event Listeners
 gameBoard.addEventListener("click", handleSelect);
 
 //____________________________________________________ Test Utilities
 document.getElementById("new").addEventListener("click", getWords);
-document.getElementById("clear").addEventListener("click", wiper());
+document.getElementById("clear").addEventListener("click", wiper);
 document.getElementById("populate").addEventListener("click", populate);
+document.getElementById("spymaster").addEventListener("click", reveal);
 
 //__________________________________________________Invoked Functions
 getWords();

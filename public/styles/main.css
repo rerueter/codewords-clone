@@ -72,6 +72,14 @@ footer a {
   background-color: whitesmoke;
 }
 
+.A > .spymaster {
+  background-color: goldenrod;
+}
+.B > .spymaster {
+  background-color: teal;
+  color: var(--lt);
+}
+
 #gameboard {
   max-width: 900px;
   margin: 0 auto;

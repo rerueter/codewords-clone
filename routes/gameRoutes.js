@@ -22,14 +22,29 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const foundGame = await DB.Game.findById(req.params.id);
-    const responseObject = {
+    const resObject = {
       status: 200,
       data: foundGame,
       reqAt: new Date().toLocaleString(),
     };
-    res.status(200).json(responseObject);
+    res.status(200).json(resObject);
   } catch (err) {
     return res.status(400).json({ msg: "something went wrong", err: err });
+  }
+});
+
+//______________________________________________________________ Find
+router.get("/search/:name", async (req, res) => {
+  try {
+    const foundGame = await DB.Game.find({ name: req.params.name });
+    const resObject = {
+      status: 200,
+      data: foundGame,
+      reqAt: new Date().toLocaleString(),
+    };
+    res.status(200).json(resObject);
+  } catch (err) {
+    return res.status(400).json({ msg: "game find error", err: err });
   }
 });
 
