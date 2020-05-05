@@ -3,32 +3,26 @@ console.log("main.js");
 const state = {
   cards: [],
   turn: "",
+  scoreA: 0,
+  scoreB: 0,
 };
 
 const gameBoard = document.getElementById("gameboard");
 
-const words = [
-  "hello",
-  "there",
-  "I",
-  "am",
-  "appending",
-  "words",
-  "to",
-  "the",
-  "dom",
-  "and",
-  "it's",
-  "cool",
-  "but",
-  "I",
-  "have",
-  "a",
-  "feeling",
-  "it'll",
-  "get",
-  "complicated",
-];
+let words = [];
+
+const getWords = async () => {
+  const lexicon = await fetch("/api/v1/lexicon/5eb0c5b52a8e2446037ee7dc", {
+    method: "GET",
+  })
+    .then((words) => words.json())
+    .then((wordsObj) => {
+      return wordsObj.data;
+    });
+  console.log(lexicon);
+  words = shuffler(lexicon);
+  console.log(words);
+};
 
 const deckBuilder = (input) => {
   let count = 0;
@@ -45,9 +39,9 @@ const deckBuilder = (input) => {
     card.number = i + 1;
     count++;
     state.cards.push(card);
-    // console.log(card);
   }
-  console.log(state.cards);
+  state.cards = shuffler(state.cards);
+  console.table(state.cards);
 };
 
 const shuffler = (input) => {
@@ -61,7 +55,7 @@ const shuffler = (input) => {
   for (let i = 0; i < shuffled.length; i++) {
     input.push(shuffled[i]);
   }
-  console.log(input);
+  return shuffled;
 };
 
 const populater = () => {
@@ -100,8 +94,13 @@ const handleSelect = (event) => {
     // console.log(state.cards[event.target.dataset.number]);
   }
 };
-// state.cards[0].classList.toggle("selected");
 
+async function initializer() {
+  let temp = await apiTester();
+  console.log(temp);
+}
+
+//___________________________________________________ Event Listeners
 gameBoard.addEventListener("click", handleSelect);
 
 //____________________________________________________ Test Utilities
@@ -110,8 +109,4 @@ document.getElementById("clear").addEventListener("click", wiper);
 document.getElementById("populate").addEventListener("click", populater);
 
 //__________________________________________________Invoked Functions
-shuffler(words);
-deckBuilder(words);
-shuffler(state.cards);
-populater();
-// console.log(state.cards);
+getWords();
