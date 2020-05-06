@@ -8,16 +8,32 @@
 	<title>Codewords</title>
 </head>
 <body>
-		<header>
+	<header>
 		<h3>welcome to</h3>
 		<h1>Codewords</h1>
-		<h3>a game wholly unrelated to Codenames</h3>
-		
+		<h3>a game wholly unrelated to Codenames</h3>		
 	</header>
-	<div id="menu">
-		<h2>New Game</h2>
-		<h2>Join Game</h2>
+	<div class="menu">
+		<h2 class="menu-button" id="newGame">New Game</h2>
+		<h2 class="menu-button" id=joinGame>Join Game</h2>
 	</div>
-	
+	<section id="newGameModal" class="hidden modal">
+		<h3>enter a name.</h3>
+		<form>
+			<input id="newName" type="text">
+		</form>
+		<div class="button-div">
+			<h3 id="goNew">Go</h3>
+		</div>
+	</section>
+	<section id="joinGameModal" class="hidden modal">
+		<h3>enter a name.</h3>
+		<form>
+			<input id="joinName" type="text">
+		</form>
+		<div class="button-div">
+			<h3 id="goJoin">Go</h3>
+		</div>
+	</section>
 </body>
 </html>

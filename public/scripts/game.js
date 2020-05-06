@@ -80,11 +80,15 @@ const populate = () => {
   }
 };
 
-const wiper = (bool) => {
+const wiper = () => {
   while (gameBoard.firstChild) {
     gameBoard.removeChild(gameBoard.lastChild);
   }
   console.log(state.cards);
+};
+const hardWipe = () => {
+  wiper();
+  state.cards = [];
 };
 
 const handleSelect = (event) => {
@@ -101,7 +105,6 @@ const handleSelect = (event) => {
 
 const reveal = () => {
   const cards = document.querySelectorAll("h3");
-  console.log(cards);
   cards.forEach((card) => card.classList.toggle("spymaster"));
 };
 
