@@ -5,14 +5,14 @@ const path = require("path");
 //______________________________________________________ Serve Public
 router.use(express.static(path.join(__dirname, "../public")));
 
-//__________________________________________________________ GET Game
+//______________________________________________________________ Game
 router.get("/:name", (req, res) => {
-  res.sendFile(path.join(__dirname, "../views/game2.html"));
+  res.sendFile(path.join(__dirname, "../views/game.html"));
 });
 
-//__________________________________________________________ GET Game
+//_____________________________________________________________ Index
 router.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "../views/game.html"));
+  res.sendFile(path.join(__dirname, "../views/index.html"));
 });
 
 //_____________________________________________________ Export Module

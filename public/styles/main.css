@@ -36,6 +36,12 @@ footer a {
   color: var(--lt);
   text-decoration: none;
 }
+#menu {
+  cursor: pointer;
+  background-color: var(--dk);
+  display: flex;
+  justify-content: space-evenly;
+}
 .card {
   height: 100px;
   width: 200px;

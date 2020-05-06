@@ -53,7 +53,6 @@ router.post("/", async (req, res) => {
   try {
     const foundGame = await DB.Game.find({ name: req.body.name });
     if (foundGame) {
-      console.log("duplicate found");
       return res
         .status(400)
         .json({ msg: "a game with this name already exists" });

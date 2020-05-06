@@ -1,4 +1,4 @@
-console.log("main.js");
+console.log("game.js");
 
 const state = {
   cards: [],
