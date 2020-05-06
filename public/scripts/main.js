@@ -7,9 +7,21 @@ const handleModal = (event) => {
 };
 
 const createGame = () => {
-  const game = document.getElementById("newName").value;
-  window.localStorage.setItem("name", game);
-  window.location = `/${game}`;
+  const game = {};
+  game.name = document.getElementById("newName").value;
+  console.log(game);
+  fetch("/api/v1/games", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(game),
+  })
+    .then((response) => response.json())
+    .then((responseJSON) => {
+      console.log(responseJSON);
+    });
+
+  // window.localStorage.setItem("name", game.name);
+  // window.location = `/${game.name}`;
 };
 const joinGame = () => {
   const game = document.getElementById("gamename").value;
@@ -21,5 +33,6 @@ console.log(menuButtons);
 menuButtons.forEach((button) => {
   button.addEventListener("click", handleModal);
 });
-// document.getElementById("goNew").addEventListener("click", createGame);
+
+document.getElementById("goNew").addEventListener("click", createGame);
 // document.getElementById("joingame").addEventListener("click", handleJoin);

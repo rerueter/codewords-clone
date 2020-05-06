@@ -105,7 +105,9 @@ const handleSelect = (event) => {
 
 const reveal = () => {
   const cards = document.querySelectorAll("h3");
+  const spymaster = document.getElementById("spymaster");
   cards.forEach((card) => card.classList.toggle("spymaster"));
+  spymaster.classList.toggle("active");
 };
 
 //___________________________________________________ Event Listeners

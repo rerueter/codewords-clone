@@ -51,13 +51,13 @@ router.get("/search/:name", async (req, res) => {
 //____________________________________________________________ Create
 router.post("/", async (req, res) => {
   try {
-    const foundGame = await DB.Game.find({ name: req.body.name });
-    if (foundGame) {
-      return res
-        .status(400)
-        .json({ msg: "a game with this name already exists" });
-    }
-    const createdGame = DB.Game.create(req.body);
+    // const foundGame = await DB.Game.find({ name: req.body.name });
+    // if (foundGame) {
+    //   return res
+    //     .status(400)
+    //     .json({ msg: "a game with this name already exists" });
+    // }
+    const createdGame = await DB.Game.create(req.body);
     const responseObject = {
       status: 200,
       data: createdGame,
