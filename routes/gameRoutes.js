@@ -51,19 +51,21 @@ router.get("/search/:name", async (req, res) => {
 //____________________________________________________________ Create
 router.post("/", async (req, res) => {
   try {
-    // const foundGame = await DB.Game.find({ name: req.body.name });
-    // if (foundGame) {
-    //   return res
-    //     .status(400)
-    //     .json({ msg: "a game with this name already exists" });
-    // }
+    const foundGame = await DB.Game.findOne({ name: req.body.name });
+    if (foundGame) {
+      console.log("duplicate name");
+      return res
+        .status(400)
+        .json({ msg: "a game with this name already exists" });
+    }
     const createdGame = await DB.Game.create(req.body);
     const responseObject = {
-      status: 200,
+      status: 201,
       data: createdGame,
       reqAt: new Date().toLocaleString(),
     };
     res.status(200).json(responseObject);
+    console.log("game created");
   } catch (err) {
     return res.status(400).json({ msg: "something went wrong", err: err });
   }

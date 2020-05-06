@@ -5,11 +5,12 @@ const state = {
   turn: "",
   scoreA: 0,
   scoreB: 0,
+  spymaster: false,
 };
 
 const gameBoard = document.getElementById("gameboard");
 
-let words = [];
+// let words = [];
 
 // dummy lexicon collection ids
 // 5eb0c5b52a8e2446037ee7dc - initial
@@ -71,10 +72,13 @@ const populate = () => {
     const { team, word } = state.cards[i];
     const div = document.createElement("div");
     div.classList.add("card", `${team}`);
+    div.innerHTML = `<h3>${word}</h3>`;
     if (state.cards[i].selected === true) {
       div.classList.add("selected");
     }
-    div.innerHTML = `<h3>${word}</h3>`;
+    if (state.spymaster === true) {
+      div.firstChild.classList.add("spymaster");
+    }
     div.dataset.number = `${i}`;
     gameBoard.appendChild(div);
   }
@@ -108,6 +112,8 @@ const reveal = () => {
   const spymaster = document.getElementById("spymaster");
   cards.forEach((card) => card.classList.toggle("spymaster"));
   spymaster.classList.toggle("active");
+  state.spymaster = !state.spymaster;
+  console.log(state.spymaster);
 };
 
 //___________________________________________________ Event Listeners

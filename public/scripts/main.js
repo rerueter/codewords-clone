@@ -6,6 +6,15 @@ const handleModal = (event) => {
   modal.classList.toggle("hidden");
 };
 
+const clearErr = (event) => {
+  console.log(event);
+  const errors = document.querySelectorAll(".errmsg");
+  console.log(errors);
+  errors.forEach((error) => {
+    error.remove();
+  });
+};
+
 const createGame = () => {
   const game = {};
   game.name = document.getElementById("newName").value;
@@ -18,21 +27,36 @@ const createGame = () => {
     .then((response) => response.json())
     .then((responseJSON) => {
       console.log(responseJSON);
+      if (responseJSON.status !== 201) {
+        const newGameModal = document.getElementById("newGameModal");
+        const error = document.createElement("h5");
+        error.classList.add("errmsg");
+        error.innerText = "This name is already in use. Try another.";
+        newGameModal.appendChild(error);
+      } else {
+        window.localStorage.setItem("name", game.name);
+        window.location = `/${game.name}`;
+      }
+    })
+    .catch((err) => {
+      console.log(`catch: ${err}`);
     });
-
-  // window.localStorage.setItem("name", game.name);
-  // window.location = `/${game.name}`;
 };
 const joinGame = () => {
   const game = document.getElementById("gamename").value;
   window.location = `/${game}`;
 };
 
+const inputs = document.querySelectorAll("input");
+console.log(inputs);
 const menuButtons = document.querySelectorAll(".menu-button");
-console.log(menuButtons);
+
+inputs.forEach((input) => {
+  input.addEventListener("keydown", clearErr);
+});
 menuButtons.forEach((button) => {
   button.addEventListener("click", handleModal);
 });
 
 document.getElementById("goNew").addEventListener("click", createGame);
-// document.getElementById("joingame").addEventListener("click", handleJoin);
+document.getElementById("newName").addEventListener("click", handleJoin);
