@@ -11,16 +11,30 @@ const state = {
 
 const gameBoard = document.getElementById("gameboard");
 
-const getGame = async (name) => {
-  fetch(`/api/v1/games/search/${name}`, { method: "GET" })
+const getGame = (name) => {
+  fetch(`/api/v1/games/search/${state.name}`, { method: "GET" })
     .then((res) => res.json())
     .then((gameObj) => {
-      state.cards = gameObj.data[0].cards;
+      state.cards = gameObj.data.cards;
+      state.id = gameObj.data._id;
       populate();
     });
 };
 
-const updateGame = async () => {};
+const updateGame = () => {
+  const outgoing = {
+    cards: state.cards,
+  };
+  fetch(`/api/v1/games/${state.id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(outgoing),
+  })
+    .then((res) => res.json())
+    .then((updated) => {
+      console.log(updated);
+    });
+};
 
 const populate = () => {
   wiper();
@@ -60,6 +74,7 @@ const handleSelect = (event) => {
     event.target.classList.add("selected");
     state.cards[event.target.dataset.number].selected = true;
     // console.log(state.cards[event.target.dataset.number]);
+    updateGame();
   }
 };
 
@@ -83,4 +98,4 @@ document.getElementById("spymaster").addEventListener("click", reveal);
 
 //__________________________________________________Invoked Functions
 state.name = localStorage.getItem("name");
-getGame(state.name);
+getGame();

@@ -68,34 +68,50 @@ const clearErr = (event) => {
 
 const createGame = () => {
   game.name = document.getElementById("newName").value;
-  console.log(game);
-  fetch("/api/v1/games", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(game),
-  })
-    .then((response) => response.json())
-    .then((responseJSON) => {
-      console.log(responseJSON);
-      if (responseJSON.status !== 201) {
-        const newGameModal = document.getElementById("newGameModal");
-        const error = document.createElement("h5");
-        error.classList.add("errmsg");
-        error.innerText = "This name is already in use. Try another.";
-        newGameModal.appendChild(error);
-      } else {
-        window.localStorage.setItem("name", game.name);
-        window.location = `/${game.name}`;
-      }
+  if (game.name === "") {
+    return;
+  } else {
+    console.log(game);
+    fetch("/api/v1/games", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(game),
     })
-    .catch((err) => {
-      console.log(`catch: ${err}`);
-    });
+      .then((res) => {
+        console.log(res.status);
+        if (res.status !== 201) {
+          const newGameModal = document.getElementById("newGameModal");
+          const error = document.createElement("h5");
+          error.classList.add("errmsg");
+          error.innerText = "This name is already in use. Try another.";
+          newGameModal.appendChild(error);
+        } else {
+          window.localStorage.setItem("name", game.name);
+          window.location = `/${game.name}`;
+        }
+      })
+      .catch((err) => {
+        console.log(`catch: ${err}`);
+      });
+  }
 };
 
 const joinGame = () => {
-  const game = document.getElementById("gamename").value;
-  window.location = `/${game}`;
+  const name = document.getElementById("joinName").value;
+  console.log(`name: ${name}`);
+  fetch(`/api/v1/games/search/${name}`, { method: "GET" }).then((res) => {
+    if (res.status !== 302) {
+      const joinGameModal = document.getElementById("joinGameModal");
+      const error = document.createElement("h5");
+      error.classList.add("errmsg");
+      error.innerText = "No games with this name exist.";
+      joinGameModal.appendChild(error);
+    } else {
+      console.log(res.status);
+      window.localStorage.setItem("name", name);
+      window.location = `/${name}`;
+    }
+  });
 };
 
 const inputs = document.querySelectorAll("input");

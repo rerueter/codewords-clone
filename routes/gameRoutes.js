@@ -36,13 +36,18 @@ router.get("/:id", async (req, res) => {
 //______________________________________________________________ Find
 router.get("/search/:name", async (req, res) => {
   try {
-    const foundGame = await DB.Game.find({ name: req.params.name });
-    const resObject = {
-      status: 200,
-      data: foundGame,
-      reqAt: new Date().toLocaleString(),
-    };
-    res.status(200).json(resObject);
+    const foundGame = await DB.Game.findOne({ name: req.params.name });
+    // console.log(foundGame);
+    if (foundGame === null) {
+      return res.status(404).json({ msg: "no such game" });
+    } else {
+      const resObject = {
+        status: 302,
+        data: foundGame,
+        reqAt: new Date().toLocaleString(),
+      };
+      res.status(302).json(resObject);
+    }
   } catch (err) {
     return res.status(400).json({ msg: "game find error", err: err });
   }
@@ -64,7 +69,7 @@ router.post("/", async (req, res) => {
       data: createdGame,
       reqAt: new Date().toLocaleString(),
     };
-    res.status(200).json(responseObject);
+    res.status(201).json(responseObject);
     console.log("game created");
   } catch (err) {
     return res.status(400).json({ msg: "something went wrong", err: err });
