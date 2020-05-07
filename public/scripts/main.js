@@ -1,5 +1,56 @@
 console.log("main.js");
 
+const game = {};
+
+const getWords = async () => {
+  const words = await fetch("/api/v1/lexicon/5eb1d64d4575ba5e6bcd4034", {
+    method: "GET",
+  })
+    .then((res) => res.json())
+    .then((wordsObj) => {
+      return wordsObj.data;
+    });
+  // console.log(words);
+  game.words = shuffler(words);
+  // console.log(game.words);
+  game.cards = deckBuilder(game.words);
+  console.table(game.cards);
+};
+
+const deckBuilder = (input) => {
+  let cards = [];
+  let count = 0;
+  while (count < 20) {
+    const card = {};
+    if (count === 0) {
+      card.team = "gameOver";
+    } else if (count > 0 && count < 8) {
+      card.team = "A";
+    } else if (count >= 8 && count < 14) {
+      card.team = "B";
+    } else card.team = "Neutral";
+    card.word = input[count];
+    count++;
+    cards.push(card);
+  }
+  cards = shuffler(cards);
+  return cards;
+};
+
+const shuffler = (input) => {
+  const shuffled = [];
+
+  while (input.length > 0) {
+    let i = Math.floor(Math.random() * input.length, 1);
+    shuffled.push(input[i]);
+    input.splice(i, 1);
+  }
+  for (let i = 0; i < shuffled.length; i++) {
+    input.push(shuffled[i]);
+  }
+  return shuffled;
+};
+
 const handleModal = (event) => {
   console.log(event.target.id);
   const modal = document.getElementById(`${event.target.id}Modal`);
@@ -16,7 +67,6 @@ const clearErr = (event) => {
 };
 
 const createGame = () => {
-  const game = {};
   game.name = document.getElementById("newName").value;
   console.log(game);
   fetch("/api/v1/games", {
@@ -42,13 +92,14 @@ const createGame = () => {
       console.log(`catch: ${err}`);
     });
 };
+
 const joinGame = () => {
   const game = document.getElementById("gamename").value;
   window.location = `/${game}`;
 };
 
 const inputs = document.querySelectorAll("input");
-console.log(inputs);
+// console.log(inputs);
 const menuButtons = document.querySelectorAll(".menu-button");
 
 inputs.forEach((input) => {
@@ -59,4 +110,6 @@ menuButtons.forEach((button) => {
 });
 
 document.getElementById("goNew").addEventListener("click", createGame);
-document.getElementById("newName").addEventListener("click", handleJoin);
+document.getElementById("goJoin").addEventListener("click", joinGame);
+
+getWords();
