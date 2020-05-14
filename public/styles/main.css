@@ -23,17 +23,22 @@ header {
   text-align: center;
   margin: 0 auto;
   padding: 10px 0px;
-  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 header h1 {
   font-size: 50px;
 }
+
 footer {
+  box-shadow: var(--shd-sm);
   background-color: var(--dk);
   display: flex;
   justify-content: space-evenly;
-  margin: 20px auto;
+  margin: 0 auto;
   padding: 10px 0px;
+  margin-bottom: 20px;
 }
 footer a {
   color: var(--lt);
@@ -48,10 +53,31 @@ input {
   text-align: center;
   border: none;
 }
+.countdown {
+  height: 100px;
+  width: 200px;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+.header-index {
+  margin-top: 20px;
+  display: block;
+}
+.aligner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 30px;
+}
+.spy {
+  font-size: 40px;
+  margin-left: 10px;
+  margin-top: -10px;
+}
 .menu {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 20px;
 }
 .menu-button {
   box-shadow: var(--shd-sm);

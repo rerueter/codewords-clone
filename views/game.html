@@ -3,6 +3,8 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Font Awesome -->
+	<script src="https://kit.fontawesome.com/52a9ddd340.js" crossorigin="anonymous"></script>
 	<!-- Internal JS -->
 	<script defer src="/scripts/game.js"></script>
 	<!-- Internal CSS -->
@@ -11,13 +13,26 @@
 </head>
 <body>
 	<header>
-		<h1>Codewords</h1>
+		<div class = countdown>
+			<h2>Team A</h2>
+			<h1 id="aCount">err</h1>
+			<h2>remaining</h2>
+		</div>
+		<div class="aligner">
+			<h1>Codewords</h1>
+			<i class="spy fas fa-user-secret"></i>	
+		</div>
+		<div class = countdown>
+			<h2>Team B</h2>
+			<h1 id="bCount">err</h1>
+			<h2>remaining</h2>
+		</div>
 	</header>
-	<footer>
-		<div class="test-button" id="clear">Clear Board</div>
-		<div class="test-button" id="populate">Populate</div>
-		<div class="test-button" id="spymaster">Spymaster</div>
-	</footer>
 	<section id="gameboard"></section>
+		<footer>
+			<div class="test-button" id="clear">Clear Board</div>
+			<div class="test-button" id="populate">Populate</div>
+			<div class="test-button" id="spymaster">Spymaster</div>
+		</footer>
 </body>
 </html>

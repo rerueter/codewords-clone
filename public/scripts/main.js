@@ -1,6 +1,6 @@
 console.log("main.js");
 
-const game = {};
+const game = { scoreA: 0, scoreB: 0 };
 
 const getWords = async () => {
   const words = await fetch("/api/v1/lexicon/5eb1d64d4575ba5e6bcd4034", {
@@ -10,9 +10,8 @@ const getWords = async () => {
     .then((wordsObj) => {
       return wordsObj.data;
     });
-  // console.log(words);
+
   game.words = shuffler(words);
-  // console.log(game.words);
   game.cards = deckBuilder(game.words);
   console.table(game.cards);
 };
@@ -26,8 +25,10 @@ const deckBuilder = (input) => {
       card.team = "gameOver";
     } else if (count > 0 && count < 8) {
       card.team = "A";
+      game.scoreA += 1;
     } else if (count >= 8 && count < 14) {
       card.team = "B";
+      game.scoreB += 1;
     } else card.team = "Neutral";
     card.word = input[count];
     count++;

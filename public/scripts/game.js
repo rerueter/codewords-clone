@@ -1,5 +1,4 @@
 console.log("game.js");
-
 const state = {
   name: "",
   cards: [],
@@ -17,6 +16,8 @@ const getGame = (name) => {
     .then((gameObj) => {
       state.cards = gameObj.data.cards;
       state.id = gameObj.data._id;
+      state.scoreA = gameObj.data.scoreA;
+      state.scoreB = gameObj.data.scoreB;
       populate();
     });
 };
@@ -24,6 +25,8 @@ const getGame = (name) => {
 const updateGame = () => {
   const outgoing = {
     cards: state.cards,
+    scoreA: state.scoreA,
+    scoreB: state.scoreB,
   };
   fetch(`/api/v1/games/${state.id}`, {
     method: "PUT",
@@ -38,6 +41,8 @@ const updateGame = () => {
 
 const populate = () => {
   wiper();
+  const scoreA = document.getElementById("aCount");
+  const scoreB = document.getElementById("bCount");
   for (let i = 0; i < state.cards.length; i++) {
     const { team, word } = state.cards[i];
     const div = document.createElement("div");
@@ -52,6 +57,8 @@ const populate = () => {
     div.dataset.number = `${i}`;
     gameBoard.appendChild(div);
   }
+  scoreA.innerText = state.scoreA;
+  scoreB.innerText = state.scoreB;
 };
 
 const wiper = () => {
@@ -66,6 +73,8 @@ const hardWipe = () => {
 };
 
 const handleSelect = (event) => {
+  const scoreA = document.getElementById("aCount");
+  const scoreB = document.getElementById("bCount");
   // console.log(event.target);
   if (
     event.target.classList.contains("card") &&
@@ -73,6 +82,14 @@ const handleSelect = (event) => {
   ) {
     event.target.classList.add("selected");
     state.cards[event.target.dataset.number].selected = true;
+    if (event.target.classList.contains("A")) {
+      state.scoreA -= 1;
+      scoreA.innerText = state.scoreA;
+    }
+    if (event.target.classList.contains("B")) {
+      state.scoreB -= 1;
+      scoreB.innerText = state.scoreB;
+    }
     // console.log(state.cards[event.target.dataset.number]);
     updateGame();
   }
